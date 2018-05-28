@@ -137,7 +137,7 @@ public class ZerotubeBot implements IBot
     
     private void updatePresence()
     {
-        LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
+        LOGGER.info("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
         client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, nowPlaying);
     }
 }
