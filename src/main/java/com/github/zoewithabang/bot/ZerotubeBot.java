@@ -133,18 +133,7 @@ public class ZerotubeBot implements IBot
     
     private void updatePresence()
     {
-        RequestBuffer.request(() ->
-            {
-                try
-                {
-                    LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
-                    client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, nowPlaying);
-                }
-                catch(DiscordException e)
-                {
-                    LOGGER.error("[ZEROTUBEBOT] Failed to update bot presence to '{}'.", nowPlaying);
-                }
-            }
-        );
+        LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
+        client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, nowPlaying);
     }
 }
