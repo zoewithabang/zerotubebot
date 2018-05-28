@@ -105,13 +105,19 @@ public class ZerotubeBot implements IBot
             String line;
             final int YOUTUBE_SUFFIX = 17;
             
+            //reading over log
             while((line = reader.readLine()) != null)
             {
+                LOGGER.debug("[ZEROTUBEBOT] Current log line: {}", line);
                 String[] lineSplitOnPlaylistTag = line.split(Pattern.quote("[playlist] Now playing: "));
+                //if this line has a "now playing" entry
                 if(lineSplitOnPlaylistTag.length > 1
-                    && lineSplitOnPlaylistTag[1] != null)
+                    && lineSplitOnPlaylistTag[1] != null
+                    && !lineSplitOnPlaylistTag[1].equals(""))
                 {
                     String title = lineSplitOnPlaylistTag[1].substring(0, lineSplitOnPlaylistTag[1].length() - YOUTUBE_SUFFIX);
+                    LOGGER.debug("[ZEROTUBEBOT] After N/P: {}", lineSplitOnPlaylistTag[1]);
+                    LOGGER.debug("[ZEROTUBEBOT] Title: {}", title);
                     if(!nowPlaying.equals(title))
                     {
                         nowPlaying = title;
@@ -120,7 +126,7 @@ public class ZerotubeBot implements IBot
                     else
                     {
                         //now playing is still the same, stop checking
-                        break;
+                        return;
                     }
                 }
             }
@@ -133,7 +139,7 @@ public class ZerotubeBot implements IBot
     
     private void updatePresence()
     {
-        LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
+        //LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
         client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, nowPlaying);
     }
 }
