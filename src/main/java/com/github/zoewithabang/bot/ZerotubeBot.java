@@ -38,7 +38,7 @@ public class ZerotubeBot implements IBot
         commands = new HashMap<>();
         
         //add bot commands to Map
-        commands.put("url", new GetUrl(this, (String)properties.get("url")));
+        commands.put("url", new GetUrl(this, properties.getProperty("url")));
         
         //initialise log update checker
         updateCheck = this::checkLogForUpdate;
@@ -100,7 +100,7 @@ public class ZerotubeBot implements IBot
     
     private void checkLogForUpdate()
     {
-        try(ReversedLinesFileReader reader = new ReversedLinesFileReader(new File((String)properties.get("chanloglocation")), StandardCharsets.UTF_8))
+        try(ReversedLinesFileReader reader = new ReversedLinesFileReader(new File(properties.getProperty("chanloglocation")), StandardCharsets.UTF_8))
         {
             String line;
             final int YOUTUBE_SUFFIX = 17;
@@ -117,12 +117,17 @@ public class ZerotubeBot implements IBot
                         nowPlaying = title;
                         updatePresence();
                     }
+                    else
+                    {
+                        //now playing is still the same, stop checking
+                        break;
+                    }
                 }
             }
         }
         catch(IOException e)
         {
-            LOGGER.error("[ZEROTUBEBOT] Could not find the channel log location '{}'.", properties.get("chanloglocation"), e);
+            LOGGER.error("[ZEROTUBEBOT] Could not find the channel log location '{}'.", properties.getProperty("chanloglocation"), e);
         }
     }
     
