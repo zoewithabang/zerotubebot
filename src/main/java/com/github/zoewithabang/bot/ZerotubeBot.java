@@ -123,11 +123,9 @@ public class ZerotubeBot implements IBot
                         nowPlaying = title;
                         updatePresence();
                     }
-                    else
-                    {
-                        //now playing is still the same, stop checking
-                        return;
-                    }
+                    
+                    //either presence is updated or doesn't need to be updated, end
+                    return;
                 }
             }
         }
@@ -139,7 +137,7 @@ public class ZerotubeBot implements IBot
     
     private void updatePresence()
     {
-        //LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
+        LOGGER.debug("[ZEROTUBEBOT] Updating bot presence to '{}'.", nowPlaying);
         client.changePresence(StatusType.ONLINE, ActivityType.PLAYING, nowPlaying);
     }
 }
